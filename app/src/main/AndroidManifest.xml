@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Used only for OSM basemap tile fetches on the GPS Map screen: the
+         one narrow exception to this app's zero-cloud rule, see
+         IMPLEMENTATION_NOTES.md. Sync/gallery/telemetry stay fully local. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Needed to read the currently-connected WiFi SSID (Android requires
+         location permission for this, even though this app has no use for
+         actual location) and to know the dashcam's own AP is joined. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".KhanLabsDashcamApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.KhanLabsDashcam"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KhanLabsDashcam">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Needed to hand a synced clip's local file to the Android share
+             sheet (content:// URI, not a raw file:// path); see Gallery's
+             Share action. Only exposes SyncStorage's own download dir. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="dev.khanlabs.dashcam.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>

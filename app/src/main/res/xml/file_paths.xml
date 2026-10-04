@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Matches SyncStorage.downloadDir: context.getExternalFilesDir(Environment.DIRECTORY_MOVIES) -->
+    <external-files-path name="synced_clips" path="Movies/" />
+</paths>
